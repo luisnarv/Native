@@ -12,28 +12,35 @@ import { StatusBar } from "expo-status-bar";
 import Logo from "../components/Logo";
 import Header from "../components/Header";
 import Timer from "../components/Timer";
-import UserTime from "../components/UserTime";
+
+import { useUser } from "../../ContexApi";
+import { Audio } from "expo-av";
 
 const mode = [
   { name: "Pomodoro", time: 25, color: "#F7CD6F" },
   { name: "Short Break", time: 5, color: "#A2D9CE" },
 ];
 
-export default function App(props, { navigation }) {
+export default function App({ navigation }) {
+  const { user, setUser } = useUser();
   const [isWorking, setIsworking] = useState(false);
   const [active, setActive] = useState(false);
   const [currentMode, setCurrentmode] = useState({
     mode: mode[0].name,
     color: mode[0].color,
   });
-  const [time, setTime] = useState(Number(props.route.params.user.time) * 60);
+
+  console.log(user);
+
+  const [time, setTime] = useState(Number(user.time) * 60);
+
   function hanldeMode(name, color) {
     setCurrentmode({ mode: name, color: color });
     const time = name === "Pomodoro" ? 25 : name === "Short Break" ? 5 : 15;
     setTime(time * 60);
     setActive(false);
   }
-  console.log(props.route.params.user, "esto es time");
+
   function handleActive() {
     setActive((active) => !active);
     Playsound();

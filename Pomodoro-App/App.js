@@ -11,8 +11,6 @@ import { UserProvider } from "./ContexApi";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [user, setUser] = useState(0);
-
   return (
     <NavigationContainer>
       <UserProvider>
@@ -25,7 +23,7 @@ export default function App() {
           <Stack.Screen
             name="Pomodoro"
             component={Pomodoro}
-            initialParams={{ user }}
+            //  initialParams={{ user }}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

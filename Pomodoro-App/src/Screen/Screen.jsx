@@ -13,8 +13,8 @@ export default function Screen({ navigation }) {
 
   console.log(user, "esto es practica");
   function naviGation() {
-    // props.route.params.setUser({ time: Time, break: Break });
-    // setTimeout(() => props.navigation.navigate("Pomodoro"), 1000);
+    setUser({ time: Time, break: Break });
+    setTimeout(() => navigation.navigate("Pomodoro"), 1000);
   }
 
   return (
