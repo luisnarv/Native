@@ -16,34 +16,29 @@ import Timer from "../components/Timer";
 import { useUser } from "../../ContexApi";
 import { Audio } from "expo-av";
 
-const mode = [
-  { name: "Pomodoro", time: 25, color: "#F7CD6F" },
-  { name: "Short Break", time: 5, color: "#A2D9CE" },
-];
+//time: 5, color: "#A2D9CE"
+//time: 25, color: "#F7CD6F"
+const mode = ["Pomodoro", "Break"];
 
 export default function App({ navigation }) {
   const { user, setUser } = useUser();
-  const [isWorking, setIsworking] = useState(false);
-  const [active, setActive] = useState(false);
-  const [currentMode, setCurrentmode] = useState({
-    mode: mode[0].name,
-    color: mode[0].color,
-  });
-
-  console.log(user);
-
+  const [currentMode, setCurrentmode] = useState("Pomodoro");
   const [time, setTime] = useState(Number(user.time) * 60);
+  const [active, setActive] = useState(false);
 
-  function hanldeMode(name, color) {
-    setCurrentmode({ mode: name, color: color });
-    const time = name === "Pomodoro" ? 25 : name === "Short Break" ? 5 : 15;
+  const [isWorking, setIsworking] = useState(false);
+
+  function handleMode(name) {
+    const time = name === "Pomodoro" ? user.time : user.break;
     setTime(time * 60);
     setActive(false);
+    setCurrentmode(name);
   }
 
   function handleActive() {
     setActive((active) => !active);
     Playsound();
+    setIsworking((isWorking) => !isWorking);
   }
 
   async function Playsound() {
@@ -53,35 +48,31 @@ export default function App({ navigation }) {
     await sound.playAsync();
   }
 
-  useEffect(() => {
-    let interval = null;
-    if (active) {
-      interval = setInterval(() => {
-        setTime(time - 1);
-      }, 1000);
-    } else {
-      clearInterval(interval);
-    }
-    if (time <= 0) {
-      hanldeMode(mode[1].name, modo[1].color);
-    }
-
-    return () => clearInterval(interval);
-  }, [active, time]);
-
   return (
     <SafeAreaView
-      style={[styles.containerIOS, { backgroundColor: currentMode.color }]}
+      style={[
+        styles.containerIOS,
+        currentMode === "Pomodoro"
+          ? { backgroundColor: "#FAD981" }
+          : { backgroundColor: "#4688dd" },
+      ]}
     >
       <View style={styles.containerAndroid}>
         <Logo />
-        {/* <Logo>{navigation}</Logo> */}
+
         <Header
           currentMode={currentMode}
-          onCurrentMode={hanldeMode}
+          onCurrentMode={handleMode}
           mode={mode}
         />
-        <Timer time={time} />
+        <Timer
+          time={time}
+          handleMode={handleMode}
+          mode={currentMode}
+          setTime={setTime}
+          active={active}
+        />
+
         <StatusBar style="auto" />
         <TouchableOpacity onPress={handleActive} style={styles.button}>
           <Text style={styles.active}>{active ? "Stop" : "Start"}</Text>
@@ -105,7 +96,7 @@ const styles = StyleSheet.create({
   ],
 
   button: {
-    backgroundColor: "#333333",
+    backgroundColor: "#000000bd",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
@@ -114,8 +105,39 @@ const styles = StyleSheet.create({
 
   active: {
     color: "#fff",
-    fontWeight: "bold",
+    fontWeight: "500",
     textTransform: "uppercase",
     fontSize: 20,
   },
 });
+
+//-----------------------------------------------------------------------------------
+
+// useEffect(() => {
+//   let interval = null;
+//   console.log(isWorking, "trabajo");
+//   console.log(currentMode, "modo");
+
+//   if (currentMode === "Pomodoro" && !isWorking && active) {
+//     let time = Number(user.time) * 60;
+//     setTime(time);
+//   } else if (currentMode !== "Pomodoro" && !isWorking && active) {
+//     setTime(Number(user.break) * 60);
+//   }
+
+//   if (active) {
+//     interval = setInterval(() => {
+//       setTime(time - 1);
+//     }, 1);
+//   } else {
+//     clearInterval(interval);
+//   }
+//   if (time <= 0) {
+//     currentMode === "Pomodoro"
+//       ? setCurrentmode("Break")
+//       : setCurrentmode("Pomodoro");
+//     setIsworking(false);
+//   }
+
+//   return () => clearInterval(interval);
+// }, [active, time, currentMode]);

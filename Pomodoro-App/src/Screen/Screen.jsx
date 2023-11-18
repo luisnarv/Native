@@ -11,7 +11,6 @@ export default function Screen({ navigation }) {
   const [Time, setTime] = useState(0);
   const [Break, setBreak] = useState(0);
 
-  console.log(user, "esto es practica");
   function naviGation() {
     setUser({ time: Time, break: Break });
     setTimeout(() => navigation.navigate("Pomodoro"), 1000);
@@ -23,7 +22,7 @@ export default function Screen({ navigation }) {
         <StatusBar style="auto" />
 
         <Text style={styles.text}>Pomodoro</Text>
-        <UserTime time={setTime} Break={setBreak} />
+        <UserTime val={Time} time={setTime} Break={setBreak} />
         <Button
           onEvent={naviGation}
           style={[styles.item, styles.boxShadow]}

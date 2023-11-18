@@ -8,21 +8,19 @@ export default function UserTime({ time, Break }) {
       <TextInput
         keyboardType="numeric"
         editable
-        multiline
-        numberOfLines={4}
+        autoFocus
+        numberOfLines={1}
         maxLength={2}
-        onChangeText={time}
-        // value={time}
+        onChangeText={(e) => time(e)}
         style={[styles.input]}
         placeholder="25"
         placeholderTextColor="#a9a6a6"
       />
+
       <Text style={styles.text}>Break</Text>
       <TextInput
         keyboardType="numeric"
         editable
-        multiline
-        numberOfLines={4}
         maxLength={2}
         onChangeText={Break}
         // value={Break}

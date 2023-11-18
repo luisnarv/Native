@@ -2,21 +2,21 @@ import Timer from "./Timer";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 export default function Header({ currentMode, onCurrentMode, mode }) {
-  function handleMode(name, color) {
-    onCurrentMode(name, color);
+  function handleMode(name) {
+    onCurrentMode(name);
   }
   return (
     <View style={styles.display}>
       {mode.map((e, i) => (
         <TouchableOpacity
-          onPress={() => handleMode(e.name, e.color)}
+          onPress={() => handleMode(e)}
           key={i}
           style={[
             styles.item,
-            currentMode.mode !== e.name && { borderColor: "transparent" },
+            currentMode !== e && { borderColor: "transparent" },
           ]}
         >
-          <Text style={styles.text}>{e.name}</Text>
+          <Text style={styles.text}>{e}</Text>
         </TouchableOpacity>
       ))}
     </View>
@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
   },
 
   item: {
-    width: "33%",
-    fontWeight: "bold",
+    width: "50%",
+    fontWeight: "400",
     borderWidth: 3,
     alignItems: "center",
     padding: 5,
@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   text: {
-    fontWeight: "bold",
+    fontSize: 20,
+    fontWeight: "400",
   },
 });

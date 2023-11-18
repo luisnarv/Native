@@ -5,7 +5,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Screen from "./src/Screen/Screen";
 import Pomodoro from "./src/Screen/Pomodoro";
-import { useState } from "react";
 import { UserProvider } from "./ContexApi";
 
 const Stack = createNativeStackNavigator();
@@ -23,7 +22,6 @@ export default function App() {
           <Stack.Screen
             name="Pomodoro"
             component={Pomodoro}
-            //  initialParams={{ user }}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

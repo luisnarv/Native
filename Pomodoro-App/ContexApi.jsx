@@ -14,7 +14,7 @@ function UserProvider({ children }) {
 
 function useUser() {
   const context = useContext(UserContext);
-  console.log(context, "context");
+
   if (!context) {
     throw new Error("useUser debe ser utilizado dentro de un UserProvider");
   }

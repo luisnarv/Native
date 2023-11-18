@@ -1,13 +1,14 @@
 import { View, SafeAreaView, StyleSheet, Platform, Text } from "react-native";
 import { useEffect } from "react";
 
-export default function Timer({ hanldeMode, setTime, active, time }) {
+export default function Timer({ time, handleMode, mode, setTime, active }) {
   const formatedTime = `${Math.floor(time / 60)
     .toString()
     .padStart(2, 0)}:${(time % 60).toString().padStart(2, 0)}`;
 
   useEffect(() => {
     let interval = null;
+
     if (active) {
       interval = setInterval(() => {
         setTime(time - 1);
@@ -16,7 +17,8 @@ export default function Timer({ hanldeMode, setTime, active, time }) {
       clearInterval(interval);
     }
     if (time <= 0) {
-      hanldeMode();
+      const name = mode === "Pomodoro" ? "Break" : "Pomodoro";
+      handleMode(name);
     }
 
     return () => clearInterval(interval);
