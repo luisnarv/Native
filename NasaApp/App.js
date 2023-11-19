@@ -1,9 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, SafeAreaView, Text } from "react-native";
 import Home from "./src/screen/Home.txs/Home";
-//import Home from "./src/screen/Home.txs";
 
 export default function App() {
+  //console.log(fet);
   return (
     <SafeAreaView style={styles.container}>
       <Home />

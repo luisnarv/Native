@@ -2,7 +2,7 @@ import { Text, View, Image, StyleSheet } from "react-native";
 
 const Header = () => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <View style={styles.leftContainer}>
         <Text style={styles.text}>Explore</Text>
       </View>
@@ -20,7 +20,6 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: "row",
     alignContent: "center",
     alignItems: "center",
